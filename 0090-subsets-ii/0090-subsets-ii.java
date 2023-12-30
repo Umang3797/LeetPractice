@@ -10,7 +10,7 @@ class Solution {
         ans.add(new ArrayList(ds));
         
         for (int i=idx; i<nums.length; i++) {
-            if (i>idx && nums[i]==nums[i-1])
+            if (i!=idx && nums[i]==nums[i-1])
                 continue;
             ds.add(nums[i]);
             getsubsets(i+1 , nums , ds, ans);
