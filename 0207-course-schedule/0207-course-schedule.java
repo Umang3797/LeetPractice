@@ -29,17 +29,18 @@ class Solution {
     
     private boolean cycleFormed(int i){
         visited[i]=true;
+        seen[i]=true;
         for(int j : adj[i]){
             if(!visited[j]){
                 if(cycleFormed(j)){
                     return true;
                 }
             }
-            else if(!seen[j]){
+            else if(seen[j]){
                 return true;
             }
         }
-        seen[i]=true;
+        seen[i]=false;
         return false;
     }
 }
