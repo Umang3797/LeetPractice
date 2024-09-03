@@ -12,7 +12,10 @@ class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists==null || lists.length==0) return null;
         
-        PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length, (a,b)-> a.val-b.val);
+        // PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length, (a,b)-> Integer.comapre(a.val,b.val));
+        
+        PriorityQueue<ListNode> queue= new PriorityQueue<ListNode>(lists.length, (a,b)-> Integer.compare(a.val, b.val));
+
         
         ListNode dummy = new ListNode(0);
         ListNode tail=dummy;
