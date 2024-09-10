@@ -1,13 +1,12 @@
 class Solution {
-    public boolean isPalindrome(int num) {
-        if(num < 0)
-            return false; 
-        int reversed = 0, remainder, original = num;
-        while(num != 0) {
-            remainder = num % 10; 
-            reversed = reversed * 10 + remainder; 
-            num  /= 10; 
+    public boolean isPalindrome(int x) {
+        if(x < 0) return false;
+        int y = x;
+        int res = 0;
+        while(y != 0) {
+            res = res * 10 + y % 10;
+            y /= 10;
         }
-        return original == reversed;
+        return x == res;
     }
 }
