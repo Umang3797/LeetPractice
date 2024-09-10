@@ -21,7 +21,7 @@ class Solution {
         //dfs
         for(int i=0;i<numCourses;i++){
             if(!visited[i]){
-                if(CycleFormed(i))
+                if(cycleFormed(i))
                     return new int[]{};
             }
         }
@@ -43,16 +43,20 @@ class Solution {
         
     }
     
-    private boolean CycleFormed(int i){
-        visited[i] = true;
+    private boolean cycleFormed(int i){
+        visited[i]=true;
+        seen[i]=true;
         for(int j : adjacency[i]){
             if(!visited[j]){
-                if(CycleFormed(j))
+                if(cycleFormed(j)){
                     return true;
-            }else if(!seen[j])
+                }
+            }
+            else if(seen[j]){
                 return true;
+            }
         }
-        seen[i] = true;
+        seen[i]=false;
         return false;
     }
     
