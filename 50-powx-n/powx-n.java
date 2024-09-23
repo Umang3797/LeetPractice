@@ -14,23 +14,5 @@ class Solution {
 
         return (n < 0) ? 1 / result : result;
         
-//         double ans=1.0;
-//         double power=n;
-//         if(n<0)
-//             n=n*-1;
-        
-//         while(n>0){
-//             if(n%2==0){
-//                 x=x*x;
-//                 n=n/2;
-//             }else{
-//                 ans=ans*x;
-//                 n=n-1;
-//             }
-//         }
-//         if(power<0)
-//             ans=1/ans;
-        
-//         return ans;
     }
 }
