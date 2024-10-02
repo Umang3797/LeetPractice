@@ -22,12 +22,7 @@ class Solution {
                 digits[i]=tmp;
                 break;
             }
-            // if(digits[i]!=digits[maxIndex[i]]){ 
-            //     char tmp = digits[maxIndex[i]] ;
-            //     digits[maxIndex[i]] = digits[i];
-            //     digits[i] = tmp;
-            //     break;
-            // }
+            
         }
         
         System.out.println(Arrays.toString(maxIndex));
