@@ -14,20 +14,17 @@
  * }
  */
 class Solution {
-    int totalsum=0;
     public int sumNumbers(TreeNode root) {
-        preOrder(root,0);
-        return totalsum;
+        return sumNodes(root, 0);
     }
-    private void preOrder(TreeNode root, int sum){
-        if(root==null){
-            return;
-        }
-        sum = sum *10 + root.val;
-        if(root.left==null && root.right==null){
-            totalsum+=sum;
-        }
-        preOrder(root.left,sum);
-        preOrder(root.right,sum);
+    private int sumNodes(TreeNode root, int currentSum) {
+        if (root == null) 
+            return 0;
+        currentSum = currentSum * 10 + root.val;
+        if (root.left == null && root.right == null) 
+            return currentSum;
+        int leftSum = sumNodes(root.left, currentSum);
+        int rightSum = sumNodes(root.right, currentSum);
+    return leftSum + rightSum;
     }
 }
