@@ -4,8 +4,8 @@ class MyCircularQueue {
   private int headIndex;
   private int count;
   private int capacity;
+  private ReentrantLock queueLock = new ReentrantLock();
 
-  /** Initialize your data structure here. Set the size of the queue to be k. */
   public MyCircularQueue(int k) {
     this.capacity = k;
     this.queue = new int[k];
@@ -13,16 +13,19 @@ class MyCircularQueue {
     this.count = 0;
   }
 
-  /** Insert an element into the circular queue. Return true if the operation is successful. */
   public boolean enQueue(int value) {
-    if (this.count == this.capacity)
-      return false;
-    this.queue[(this.headIndex + this.count) % this.capacity] = value;
-    this.count += 1;
-    return true;
+    queueLock.lock();
+     try{
+         if (this.count == this.capacity)
+             return false;
+         this.queue[(this.headIndex + this.count) % this.capacity] = value;
+         this.count += 1;
+     }finally{
+         queueLock.unlock();
+     }
+      return true;
   }
 
-  /** Delete an element from the circular queue. Return true if the operation is successful. */
   public boolean deQueue() {
     if (this.count == 0)
       return false;
@@ -31,14 +34,12 @@ class MyCircularQueue {
     return true;
   }
 
-  /** Get the front item from the queue. */
   public int Front() {
     if (this.count == 0)
       return -1;
     return this.queue[this.headIndex];
   }
 
-  /** Get the last item from the queue. */
   public int Rear() {
     if (this.count == 0)
       return -1;
@@ -46,12 +47,10 @@ class MyCircularQueue {
     return this.queue[tailIndex];
   }
 
-  /** Checks whether the circular queue is empty or not. */
   public boolean isEmpty() {
     return (this.count == 0);
   }
 
-  /** Checks whether the circular queue is full or not. */
   public boolean isFull() {
     return (this.count == this.capacity);
   }
