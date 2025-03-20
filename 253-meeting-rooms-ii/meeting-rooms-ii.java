@@ -20,3 +20,14 @@ class Solution {
         return rooms;
     }
 }
+
+/*
+intervals = [[0,30],[5,10],[15,20]]
+start=[0,5,15]
+end=[30,10,20]
+
+sorting
+start=[0,5,15]
+end=[10,20,30]
+
+*/
