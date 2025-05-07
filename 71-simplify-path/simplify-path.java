@@ -10,7 +10,6 @@ class Solution {
                 s.push(p[i]);
         }
         
-        
         if(s.isEmpty()) return "/";
         while(!s.isEmpty()){
             res.insert(0,s.pop()).insert(0,"/");
