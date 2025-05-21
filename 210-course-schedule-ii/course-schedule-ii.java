@@ -1,73 +1,44 @@
 class Solution {
-    List <Integer>[] adjacency;
-    boolean seen[];
-    boolean visited[];
-    Stack<Integer> stack;
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        //creating adjacency matrix
-        adjacency = new ArrayList[numCourses]; 
-        for(int i=0;i<numCourses;i++)
-            adjacency[i] = new ArrayList();
-        
-        //visited to keep track of nodes visited while traversing
-        visited = new boolean[numCourses];
-        //seen to keep a track of not-forming loops
-        seen = new boolean[numCourses];
-        
-        //filling up the adjacency matrix, nodes with its neighbours.
-        for(int i=0;i<prerequisites.length;i++)
-            adjacency[prerequisites[i][1]].add(prerequisites[i][0]);
-        
-        //dfs
-        for(int i=0;i<numCourses;i++){
-            if(!visited[i]){
-                if(cycleFormed(i))
-                    return new int[]{};
+        List<Integer> ans = new ArrayList();
+        // Build adjacency list
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] course : prerequisites) {
+            adjList.get(course[0]).add(course[1]);
+        }
+
+        // States: 0 = unvisited, 1 = visiting, 2 = visited
+        int[] states = new int[numCourses];
+
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(i, adjList, states, ans)) {
+                return new int[]{};
             }
         }
-        
-        visited = new boolean[numCourses];
-        stack = new Stack();
-        for(int i=0;i<numCourses;i++){
-            if(!visited[i]){
-                topologicalsort(i);
-            }
-        }
-        
-        int[] res = new int[stack.size()];
-        for(int i=0;i<res.length;i++)
-            res[i] = stack.pop();
-        
-        
-        return res;
-        
+        return ans.stream().mapToInt(i -> i).toArray();
     }
-    
-    private boolean cycleFormed(int i){
-        visited[i]=true;
-        seen[i]=true;
-        for(int j : adjacency[i]){
-            if(!visited[j]){
-                if(cycleFormed(j)){
-                    return true;
-                }
-            }
-            else if(seen[j]){
-                return true;
+
+    private boolean dfs(int node, List<List<Integer>> adjList, int[] states, List<Integer> ans) {
+        if (states[node] == 2) {
+            return true; // already processed
+        }
+        if (states[node] == 1) {
+            return false; // cycle detected
+        }
+
+        states[node] = 1; // mark as visiting
+
+        for (int neighbor : adjList.get(node)) {
+            if (!dfs(neighbor, adjList, states, ans)) {
+                return false;
             }
         }
-        seen[i]=false;
-        return false;
-    }
-    
-    private void topologicalsort(int i){
-        visited[i] = true;
-        for(int j : adjacency[i]){
-            if(!visited[j]){
-                topologicalsort(j);
-            }
-        }
-        
-        stack.push(i);
+
+        states[node] = 2; // mark as visited
+        ans.add(node);
+        return true;
     }
 }
