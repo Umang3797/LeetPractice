@@ -1,46 +1,42 @@
 class Solution {
-    List <Integer>[] adj;
-    boolean seen[];
-    boolean visited[];
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int n = numCourses;
-        adj = new ArrayList[n];
+        // Build adjacency list
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            adjList.add(new ArrayList<>());
+        }
+        for (int[] course : prerequisites) {
+            adjList.get(course[0]).add(course[1]);
+        }
 
-        for(int i=0;i<n;i++){
-            adj[i] = new ArrayList<>();
-        }
-        for(int i=0;i<prerequisites.length;i++){
-            adj[prerequisites[i][0]].add(prerequisites[i][1]);
-        }
-        
-        seen = new boolean[n];
-        visited = new boolean[n];
-        
-        for(int i=0;i<n;i++){
-            if(!visited[i]){
-                if(cycleFormed(i)){
-                    return false;
-                }
+        // States: 0 = unvisited, 1 = visiting, 2 = visited
+        int[] states = new int[numCourses];
+
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(i, adjList, states)) {
+                return false;
             }
         }
         return true;
-        
     }
-    
-    private boolean cycleFormed(int i){
-        visited[i]=true;
-        seen[i]=true;
-        for(int j : adj[i]){
-            if(!visited[j]){
-                if(cycleFormed(j)){
-                    return true;
-                }
-            }
-            else if(seen[j]){
-                return true;
+
+    private boolean dfs(int node, List<List<Integer>> adjList, int[] states) {
+        if (states[node] == 2) {
+            return true; // already processed
+        }
+        if (states[node] == 1) {
+            return false; // cycle detected
+        }
+
+        states[node] = 1; // mark as visiting
+
+        for (int neighbor : adjList.get(node)) {
+            if (!dfs(neighbor, adjList, states)) {
+                return false;
             }
         }
-        seen[i]=false;
-        return false;
+
+        states[node] = 2; // mark as visited
+        return true;
     }
 }
