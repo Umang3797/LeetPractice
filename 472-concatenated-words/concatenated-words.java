@@ -23,7 +23,7 @@ class Solution {
             return memo.get(s);
         
         int n=s.length();
-        for(int i=0;i<n;i++){
+        for(int i=1;i<n;i++){
             String suffix = s.substring(i);
             if(set.contains(s.substring(0,i)) && (set.contains(suffix) || isConcat(suffix,set,memo))){
                 memo.put(s, true);
