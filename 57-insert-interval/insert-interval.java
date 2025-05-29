@@ -19,6 +19,6 @@ class Solution {
             i=i+1;
         }
         
-        return list.toArray(new int[list.size()][2]);
+        return list.toArray(new int[list.size()][]);
     }
 }
