@@ -13,7 +13,7 @@ class Solution {
         int p1 = a.length() - 1;
         int p2 = b.length() - 1;
         
-        while (p1 >= 0 || p2 >= 0 || carry != 0) {
+        while (p1 >= 0 || p2 >= 0) {
             int x1 = (p1 >= 0) ? a.charAt(p1) - '0' : 0;
             int x2 = (p2 >= 0) ? b.charAt(p2) - '0' : 0;
             
