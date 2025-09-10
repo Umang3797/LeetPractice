@@ -1,20 +1,22 @@
 class Solution {
     public String removeDuplicates(String s) {
-        Stack<Character> st = new Stack();
-        //st.push(s.charAt(0));
-        for(int i=0;i<s.length();i++){
-            if(st.isEmpty())
-                st.push(s.charAt(i));
-            else if(!st.isEmpty() && st.peek()!=s.charAt(i))
-                st.push(s.charAt(i));
-            else
-                st.pop();
+        // Use ArrayDeque as a stack (faster, non-legacy)
+        Deque<Character> stack = new ArrayDeque<>();
 
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            // If top equals current, pop; otherwise push
+            if (!stack.isEmpty() && stack.peek() == c) {
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
         }
-        StringBuilder result= new StringBuilder();
-        while(!st.isEmpty()){
-            result.append(st.pop().toString());
-        }
-        return result.reverse().toString();
+
+        // Build result (stack is reversed order)
+        StringBuilder sb = new StringBuilder(stack.size());
+        while (!stack.isEmpty()) 
+            sb.append(stack.pop());
+        return sb.reverse().toString();
     }
 }
