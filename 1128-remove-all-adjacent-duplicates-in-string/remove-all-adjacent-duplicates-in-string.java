@@ -13,10 +13,11 @@ class Solution {
             }
         }
 
-        // Build result (stack is reversed order)
+
+        // Build result 
         StringBuilder sb = new StringBuilder(stack.size());
         while (!stack.isEmpty()) 
-            sb.append(stack.pop());
-        return sb.reverse().toString();
+            sb.append(stack.removeLast());
+        return sb.toString();
     }
 }
