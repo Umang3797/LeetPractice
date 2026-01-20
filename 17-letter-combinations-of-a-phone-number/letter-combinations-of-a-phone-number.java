@@ -13,8 +13,10 @@ class Solution {
         hm.put('7', "pqrs");
         hm.put('8', "tuv");
         hm.put('9', "wxyz");
+
+        StringBuilder sb = new StringBuilder();
         
-        backtrack(digits, 0, hm, new StringBuilder(), ans);
+        backtrack(digits, 0, hm, sb, ans);
         return ans;
     }
     private static void backtrack(String digits, int i, HashMap<Character, String> hm, StringBuilder sb, List<String> ans){
